@@ -6,11 +6,11 @@
 
 ## Overview
 
-**Dearly** is a personal journal and real-time AI companion designed to provide a calm, safe, and private sanctuary for daily self-reflection. It unifies mindful written journaling, spoken voice conversations, multimedia memory logging, daily music archiving, and timeline tracking into a single human-centric wellness dashboard.
+**Dearly** is a personal journal and AI companion designed for calm, private self-reflection. It combines **written journaling, voice conversations, multimedia memories, daily music tracking, and a personal timeline** in one simple dashboard.
 
-Traditional journaling tools frequently suffer from digital fatigue and lack interactive guidance, while generic AI chatbots can feel cold, impersonal, and raise significant data privacy concerns. Dearly solves this by combining private, user-isolated Cloud Firestore storage with empathetic, context-grounded Google Gemini models—without ever simulating emotional dependency or attempting to replace human relationships.
+Unlike traditional journaling apps and generic AI chatbots, Dearly provides **empathetic, context-aware AI support using Google Gemini**, while keeping user data private and isolated through **Cloud Firestore**.
 
-Built with a full-stack architecture deployed on **Google Cloud Run**, Dearly pairs a responsive, pastel-themed React single-page application with a Node.js/Express backend that securely handles Gemini model interactions, bidirectional WebSocket audio streaming, and third-party media proxies.
+Dearly is built with **React, Node.js/Express, and WebSockets**, and is securely deployed on **Google Cloud Run**.
 
 ---
 
