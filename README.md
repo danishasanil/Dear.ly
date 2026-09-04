@@ -1,4 +1,4 @@
-# Dearly
+# Dear.ly
 
 > An private AI journal companion powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-**Dearly** is a personal journal and AI companion designed for calm, private self-reflection. It combines **written journaling, voice conversations, multimedia memories, daily music tracking, and a personal timeline** in one simple dashboard.
+**Dear.ly** is a personal journal and AI companion designed for calm, private self-reflection. It combines **written journaling, voice conversations, multimedia memories, daily music tracking, and a personal timeline** in one simple dashboard.
 
 Unlike traditional journaling apps and generic AI chatbots, Dearly provides context-aware AI support using Google Gemini**, while keeping user data private and isolated through **Cloud Firestore**.
 
