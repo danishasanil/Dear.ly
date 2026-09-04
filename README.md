@@ -1,6 +1,6 @@
 # Dear.ly
 
-> An private AI journal companion powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
+> A private AI journal companion powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
 
 ---
 
