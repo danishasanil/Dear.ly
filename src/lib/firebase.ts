@@ -3,8 +3,14 @@ import { getAuth, GoogleAuthProvider, Auth } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import firebaseConfigJson from '../../firebase-applet-config.json';
 
+// Retrieve Firebase Web API key dynamically from secure runtime environment
+const apiKey =
+  (import.meta.env?.VITE_FIREBASE_API_KEY as string) ||
+  (typeof process !== 'undefined' && process.env ? process.env.FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY : '') ||
+  firebaseConfigJson.apiKey;
+
 const firebaseConfig = {
-  apiKey: firebaseConfigJson.apiKey,
+  apiKey: apiKey,
   authDomain: firebaseConfigJson.authDomain,
   projectId: firebaseConfigJson.projectId,
   storageBucket: firebaseConfigJson.storageBucket,
