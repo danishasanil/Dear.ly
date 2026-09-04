@@ -1,0 +1,6 @@
+{
+  "name": "Dear.ly - Your Gemini Personal Journal",
+  "description": "A secure, private personal journal with a calm Gemini AI companion.",
+  "requestFramePermissions": ["microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

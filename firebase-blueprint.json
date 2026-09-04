@@ -1,0 +1,134 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profile",
+      "description": "Stores user profile metadata and settings",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "lastLoginAt": { "type": "string" }
+      },
+      "required": ["email", "createdAt"]
+    },
+    "journalEntries": {
+      "title": "Journal Entry",
+      "description": "User's private journal reflection notes with optional Gemini AI companion thoughts",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "mood": { "type": "string" },
+        "geminiReflection": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["content", "createdAt"]
+    },
+    "conversations": {
+      "title": "Conversation Session",
+      "description": "Chat session with Gemini journal companion",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "mode": { "type": "string", "enum": ["text", "voice"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["createdAt", "mode"]
+    },
+    "messages": {
+      "title": "Conversation Message",
+      "description": "Individual turn in a multi-turn conversation",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "content": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "mode": { "type": "string", "enum": ["text", "voice"] }
+      },
+      "required": ["role", "content", "timestamp"]
+    },
+    "moments": {
+      "title": "Moment",
+      "description": "Lightweight media or text moment captured by the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "text": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "mediaType": { "type": "string", "enum": ["photo", "video"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["createdAt", "userId"]
+    },
+    "songs": {
+      "title": "Song of the Day",
+      "description": "Daily song picked by the user from YouTube",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "songTitle": { "type": "string" },
+        "platform": { "type": "string" },
+        "source": { "type": "string" },
+        "externalUrl": { "type": "string" },
+        "canonicalUrl": { "type": "string" },
+        "youtubeVideoId": { "type": "string" },
+        "artworkUrl": { "type": "string" },
+        "embedUrl": { "type": "string" },
+        "date": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["songTitle", "date", "userId", "createdAt"]
+    },
+    "settings": {
+      "title": "User Settings & Preferences",
+      "description": "User preferences including voice gender and optional gentle journal reminders",
+      "type": "object",
+      "properties": {
+        "voiceGender": { "type": "string", "enum": ["female", "male"] },
+        "voiceName": { "type": "string" },
+        "theme": { "type": "string" },
+        "dailyReminderEnabled": { "type": "boolean" },
+        "reminderTimeOfDay": { "type": "string", "enum": ["morning", "afternoon", "evening"] },
+        "reminderTone": { "type": "string", "enum": ["gentle", "poetic", "reflective"] },
+        "preferredTime": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "User profile document restricted strictly to the authenticated owner"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": "settings",
+      "description": "User settings and gentle reminder preferences"
+    },
+    "/users/{userId}/journalEntries/{entryId}": {
+      "schema": "journalEntries",
+      "description": "Private journal reflections owned by the user"
+    },
+    "/users/{userId}/conversations/{conversationId}": {
+      "schema": "conversations",
+      "description": "Multi-turn conversation sessions owned by the user"
+    },
+    "/users/{userId}/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "messages",
+      "description": "Individual messages in a user's conversation session"
+    },
+    "/users/{userId}/moments/{momentId}": {
+      "schema": "moments",
+      "description": "Private captured moments owned strictly by the authenticated user"
+    },
+    "/users/{userId}/songs/{songId}": {
+      "schema": "songs",
+      "description": "Private daily song selections owned strictly by the authenticated user"
+    }
+  }
+}

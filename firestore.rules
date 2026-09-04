@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to verify user ownership
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // User document rules
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // Journal entries subcollection
+      match /journalEntries/{entryId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Conversations subcollection
+      match /conversations/{conversationId} {
+        allow read, write: if isOwner(userId);
+
+        // Messages subcollection
+        match /messages/{messageId} {
+          allow read, write: if isOwner(userId);
+        }
+      }
+
+      // Settings and preferences subcollection
+      match /settings/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Moments subcollection
+      match /moments/{momentId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Songs subcollection
+      match /songs/{songId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Reminders subcollection
+      match /reminders/{reminderId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Deny everything else by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
