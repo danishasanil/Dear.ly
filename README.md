@@ -149,51 +149,6 @@ Dearly adheres strictly to human-centric companion ethics:
 ---
 
 ## Technical Architecture
-
-```mermaid
-graph TD
-    subgraph Client Browser [Client Browser - React 19 SPA]
-        UI[User Interface & Views]
-        AuthContext[AuthContext - Firebase Popup]
-        AudioEngine[Audio Engine - 16kHz PCM]
-        Player[In-App Music Player]
-    end
-
-    subgraph Firebase Cloud [Google Cloud Firebase]
-        FirebaseAuth[Firebase Auth - Google Sign-In]
-        Firestore[Cloud Firestore DB]
-        Rules[Firestore Security Rules - ABAC]
-    end
-
-    subgraph Backend Server [Express App on Cloud Run]
-        Express[Express REST API - /api/*]
-        WSServer[WebSocket Gateway - /api/live]
-        MusicProxy[YouTube Search Proxy]
-    end
-
-    subgraph Google AI [Google Gemini]
-        GeminiFlash[Gemini 2.5/3.8 Flash - Chat & Reflection]
-        GeminiLive[Gemini Live API - Real-Time Audio]
-    end
-
-    subgraph YouTube Service [YouTube Service]
-        YouTubeAPI[YouTube Data API / Embeds]
-    end
-
-    %% Client direct to Firebase
-    AuthContext -->|Google OAuth Popup| FirebaseAuth
-    UI -->|Direct Firestore SDK| Rules
-    Rules --> Firestore
-
-    %% Client to Backend
-    UI -->|REST: /api/gemini/chat, /api/gemini/reflect| Express
-    AudioEngine -->|WebSocket PCM Stream: /api/live| WSServer
-    Player -->|REST: /api/music/search| MusicProxy
-
-    %% Backend to External
-    Express -->|@google/genai SDK with GEMINI_API_KEY| GeminiFlash
-    WSServer -->|Live Audio Session| GeminiLive
-    MusicProxy -->|YOUTUBE_API_KEY / Fallback| YouTubeAPI
 ```
 
 ### Architecture Highlights:
