@@ -6,7 +6,7 @@
 
 ## Overview
 
-**Dearly** is an empathetic personal journal and thoughtful AI companion designed with a warm, calm, soft-pastel aesthetic. It gives users a safe, private space to write reflections, capture multimedia memories, log daily soundtracks, and engage in spoken or text-based conversations with an AI companion that encourages healthy self-reflection.
+**Dearly** is an personal journal and thoughtful AI companion designed with a warm, calm, soft-pastel aesthetic. It gives users a safe, private space to write reflections, capture multimedia memories, log daily soundtracks, and engage in spoken or text-based conversations with an AI companion that encourages healthy self-reflection.
 
 Dearly solves the problem of digital journal fatigue, emotional isolation, and fragmented personal memories by unifying mindful journaling, real-time voice conversations, multimedia moment logging, daily music archiving, and timeline calendar tracking into a single private sanctuary.
 
