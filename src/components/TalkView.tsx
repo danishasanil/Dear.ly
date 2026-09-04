@@ -109,7 +109,28 @@ export const TalkView: React.FC<TalkViewProps> = ({ initialMessage }) => {
 
   // Load existing conversations or create default
   useEffect(() => {
-    if (!user) return;
+    // Immediately reset previous user's conversation state
+    setConversations([]);
+    setActiveConvId(null);
+    setMessages([]);
+    setInputText(initialMessage || '');
+    setIsTyping(false);
+    setErrorMsg(null);
+    setVoiceError(null);
+    setCurrentUserTranscript('');
+    setCurrentAssistantTranscript('');
+    activeConvIdRef.current = null;
+    currentUserTranscriptRef.current = '';
+    currentAssistantTranscriptRef.current = '';
+    stopVoiceSession();
+
+    if (!user) {
+      setLoadingHistory(false);
+      return;
+    }
+
+    setLoadingHistory(true);
+
     const fetchConversations = async () => {
       try {
         const convRef = collection(db, 'users', user.uid, 'conversations');

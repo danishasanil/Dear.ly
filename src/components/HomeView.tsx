@@ -48,8 +48,23 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
   });
 
   useEffect(() => {
+    // Immediately reset previous state
+    setRecentEntries([]);
+    setTodaySong(null);
+    setIsPlayingSong(false);
+    setPreferences(null);
+    setActiveReminderText(null);
+    setHasWrittenToday(false);
+    setDismissedReminderToday(false);
+
+    if (!user) {
+      setLoadingEntries(false);
+      return;
+    }
+
+    setLoadingEntries(true);
+
     const fetchRecentEntries = async () => {
-      if (!user) return;
       try {
         const todayStr = new Date().toISOString().split('T')[0];
 
@@ -87,7 +102,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         });
         setHasWrittenToday(hasToday);
 
-        // 3. Fetch today's song if saved
+        // 4. Fetch today's song if saved
         const songsRef = collection(db, 'users', user.uid, 'songs');
         const songSnap = await getDocs(query(songsRef, orderBy('createdAt', 'desc'), limit(1)));
         if (!songSnap.empty) {

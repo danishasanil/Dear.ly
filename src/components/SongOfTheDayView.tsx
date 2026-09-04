@@ -113,10 +113,25 @@ export const SongOfTheDayView: React.FC = () => {
 
   // Subscribe to user's saved songs under users/{uid}/songs
   useEffect(() => {
+    // Immediately reset previous state
+    setSavedSongs([]);
+    setSearchQuery('');
+    setSearchResults([]);
+    setIsSearching(false);
+    setSearchPerformed(false);
+    setChosenSong(null);
+    setIsSaving(false);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    setCurrentlyPlayingId(null);
+    setPreviewTrack(null);
+
     if (!user) {
       setLoadingSongs(false);
       return;
     }
+
+    setLoadingSongs(true);
 
     const songsRef = collection(db, 'users', user.uid, 'songs');
     const q = query(songsRef, orderBy('date', 'desc'));

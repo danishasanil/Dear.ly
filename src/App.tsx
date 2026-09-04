@@ -45,15 +45,15 @@ const MainApp: React.FC = () => {
       {/* Top Header & Navigation */}
       <Navigation activeTab={activeTab} onTabChange={(tab) => handleNavigate(tab)} />
 
-      {/* Primary View Content Area */}
-      <main className="flex-1">
-        {activeTab === 'home' && <HomeView onNavigate={handleNavigate} />}
-        {activeTab === 'journal' && <JournalView initialPrompt={passedPrompt} />}
-        {activeTab === 'calendar' && <CalendarView onNavigate={handleNavigate} />}
-        {activeTab === 'moments' && <MomentsView />}
-        {activeTab === 'song' && <SongOfTheDayView />}
-        {activeTab === 'talk' && <TalkView initialMessage={passedPrompt} />}
-        {activeTab === 'settings' && <SettingsView />}
+      {/* Primary View Content Area strictly keyed to authenticated user.uid */}
+      <main key={user.uid} className="flex-1">
+        {activeTab === 'home' && <HomeView key={`home_${user.uid}`} onNavigate={handleNavigate} />}
+        {activeTab === 'journal' && <JournalView key={`journal_${user.uid}`} initialPrompt={passedPrompt} />}
+        {activeTab === 'calendar' && <CalendarView key={`calendar_${user.uid}`} onNavigate={handleNavigate} />}
+        {activeTab === 'moments' && <MomentsView key={`moments_${user.uid}`} />}
+        {activeTab === 'song' && <SongOfTheDayView key={`song_${user.uid}`} />}
+        {activeTab === 'talk' && <TalkView key={`talk_${user.uid}`} initialMessage={passedPrompt} />}
+        {activeTab === 'settings' && <SettingsView key={`settings_${user.uid}`} />}
       </main>
     </div>
   );

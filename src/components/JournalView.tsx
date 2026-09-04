@@ -85,7 +85,24 @@ export const JournalView: React.FC<JournalViewProps> = ({ initialPrompt }) => {
 
   // Subscribe to user's journal entries and songs
   useEffect(() => {
-    if (!user) return;
+    // Immediately reset previous state
+    setEntries([]);
+    setSavedSongs([]);
+    setActiveEntry(null);
+    setActivePlayingSongId(null);
+    setSearchQuery('');
+    setSelectedMoodFilter('all');
+    setDeleteConfirmId(null);
+    setShowCancelConfirm(false);
+    setSaveError(null);
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
     const entriesRef = collection(db, 'users', user.uid, 'journalEntries');
     const qEntries = query(entriesRef, orderBy('createdAt', 'desc'));
 

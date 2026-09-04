@@ -63,10 +63,24 @@ export const MomentsView: React.FC = () => {
 
   // Real-time listener for user's moments
   useEffect(() => {
+    // Immediately reset previous state
+    setMoments([]);
+    setText('');
+    setImageUrl(null);
+    setVideoUrl(null);
+    setMediaType(null);
+    setIsSaving(false);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    stopCameraStream();
+    setCameraMode('idle');
+
     if (!user) {
       setLoading(false);
       return;
     }
+
+    setLoading(true);
 
     const momentsRef = collection(db, 'users', user.uid, 'moments');
     const q = query(momentsRef, orderBy('createdAt', 'desc'));

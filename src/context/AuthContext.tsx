@@ -17,6 +17,27 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper to safely clear all cached client-side data
+const clearAllUserLocalCache = (uid?: string) => {
+  try {
+    if (typeof window !== 'undefined') {
+      if (uid) {
+        localStorage.removeItem(`dearly_draft_${uid}`);
+      }
+      // Also scan and remove any orphaned dearly_draft_ keys or caches
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith('dearly_draft_') || key.startsWith('dearly_cached_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      // Clear session storage as well
+      sessionStorage.clear();
+    }
+  } catch (e) {
+    console.warn('Could not clear local user cache:', e);
+  }
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -25,53 +46,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        try {
-          const userRef = doc(db, 'users', currentUser.uid);
-          const docSnap = await getDoc(userRef);
-          
-          const now = new Date().toISOString();
-          let profileData: UserProfile;
+      // If user changed or signed out, immediately reset profile state
+      if (!currentUser) {
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+        return;
+      }
 
-          if (docSnap.exists()) {
-            profileData = {
-              uid: currentUser.uid,
-              email: currentUser.email,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-              createdAt: docSnap.data()?.createdAt || now,
-              lastLoginAt: now,
-            };
-            await setDoc(userRef, sanitizePayload(profileData), { merge: true });
-          } else {
-            profileData = {
-              uid: currentUser.uid,
-              email: currentUser.email,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-              createdAt: now,
-              lastLoginAt: now,
-            };
-            await setDoc(userRef, sanitizePayload(profileData));
-          }
-          setProfile(profileData);
-        } catch (err: any) {
-          console.error('Error syncing user profile:', err);
-          // Set basic profile without crashing auth
-          setProfile({
+      setUser(currentUser);
+      setProfile(null); // Reset until fresh user profile is loaded
+
+      try {
+        const userRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(userRef);
+        
+        const now = new Date().toISOString();
+        let profileData: UserProfile;
+
+        if (docSnap.exists()) {
+          profileData = {
             uid: currentUser.uid,
             email: currentUser.email,
             displayName: currentUser.displayName,
             photoURL: currentUser.photoURL,
-            createdAt: new Date().toISOString(),
-            lastLoginAt: new Date().toISOString(),
-          });
+            createdAt: docSnap.data()?.createdAt || now,
+            lastLoginAt: now,
+          };
+          await setDoc(userRef, sanitizePayload(profileData), { merge: true });
+        } else {
+          profileData = {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+            createdAt: now,
+            lastLoginAt: now,
+          };
+          await setDoc(userRef, sanitizePayload(profileData));
         }
-      } else {
-        setProfile(null);
+        setProfile(profileData);
+      } catch (err: any) {
+        console.error('Error syncing user profile:', err);
+        // Set basic profile without crashing auth
+        setProfile({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          createdAt: new Date().toISOString(),
+          lastLoginAt: new Date().toISOString(),
+        });
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -100,6 +128,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     setLoading(true);
     try {
+      clearAllUserLocalCache(user?.uid);
       // Force account picker prompt
       googleProvider.setCustomParameters({
         prompt: 'select_account',
@@ -118,6 +147,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOutUser = async () => {
     setError(null);
     try {
+      const currentUid = user?.uid;
+      clearAllUserLocalCache(currentUid);
       await signOut(auth);
       setUser(null);
       setProfile(null);

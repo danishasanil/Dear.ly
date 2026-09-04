@@ -116,6 +116,25 @@ export const SettingsView: React.FC = () => {
 
   // Fetch user preferences
   useEffect(() => {
+    // Reset default preferences on user change
+    setPreferences({
+      voiceGender: 'female',
+      voiceName: 'Aoede',
+      theme: 'pastel-warm',
+      dailyReminderEnabled: false,
+      reminderTimeOfDay: 'evening',
+      reminderTone: 'gentle',
+      dearlySuggestions: {
+        enabled: false,
+        frequency: 'daily',
+        preferredTimeOfDay: 'evening',
+        includeMomentsPrompt: true,
+        includeInactivityPrompt: true,
+      },
+    });
+    setSavedSuccess(false);
+    setSettingsError(null);
+
     if (!user) return;
     const loadPreferences = async () => {
       try {
@@ -145,10 +164,19 @@ export const SettingsView: React.FC = () => {
 
   // Real-time listener for user's custom reminders
   useEffect(() => {
+    // Immediately reset previous custom reminders
+    setCustomReminders([]);
+    setIsFormOpen(false);
+    setEditingReminderId(null);
+    setFormText('');
+    setFormError(null);
+
     if (!user) {
       setLoadingReminders(false);
       return;
     }
+
+    setLoadingReminders(true);
 
     const remindersRef = collection(db, 'users', user.uid, 'reminders');
     const q = query(remindersRef, orderBy('createdAt', 'desc'));

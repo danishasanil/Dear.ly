@@ -92,10 +92,13 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ onNavigate }) => {
 
   // Real-time Firestore subscriptions for authenticated user ONLY
   useEffect(() => {
+    // Immediately reset previous state
+    setJournalEntries([]);
+    setMoments([]);
+    setSongs([]);
+    setCurrentlyPlayingSongId(null);
+
     if (!user) {
-      setJournalEntries([]);
-      setMoments([]);
-      setSongs([]);
       setLoading(false);
       return;
     }
