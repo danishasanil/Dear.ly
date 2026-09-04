@@ -3,14 +3,10 @@ import { getAuth, GoogleAuthProvider, Auth } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import firebaseConfigJson from '../../firebase-applet-config.json';
 
-// Retrieve Firebase Web API key dynamically from secure runtime environment
-const apiKey =
-  (import.meta.env?.VITE_FIREBASE_API_KEY as string) ||
-  (typeof process !== 'undefined' && process.env ? process.env.FIREBASE_API_KEY || process.env.VITE_FIREBASE_API_KEY : '') ||
-  firebaseConfigJson.apiKey;
-
+// Firebase Web configuration: The apiKey is a public client identifier for Google/Firebase routing.
+// Real security boundaries are enforced server-side via Firebase Auth and Firestore Security Rules.
 const firebaseConfig = {
-  apiKey: apiKey,
+  apiKey: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_FIREBASE_API_KEY) || firebaseConfigJson.apiKey,
   authDomain: firebaseConfigJson.authDomain,
   projectId: firebaseConfigJson.projectId,
   storageBucket: firebaseConfigJson.storageBucket,
