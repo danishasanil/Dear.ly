@@ -6,7 +6,7 @@
 
 ## 📌 Overview
 
-**Dear.ly** is an empathetic personal journal and thoughtful AI companion designed with a warm, calm, soft-pastel aesthetic. It gives users a safe, private sanctuary to write daily reflections, capture multimedia moments, log daily soundtracks, and engage in spoken or text-based conversations with an AI companion that encourages healthy self-reflection.
+**Dear.ly** is a personal journal and thoughtful AI companion designed with a warm, calm, soft-pastel aesthetic. It gives users a safe, private sanctuary to write daily reflections, capture multimedia moments, log daily soundtracks, and engage in spoken or text-based conversations with an AI companion that encourages healthy self-reflection.
 
 Journaling is one of the most effective tools for mental clarity, emotional processing, and mindfulness. However, traditional journaling often suffers from blank-page friction, digital fatigue, and a lack of interactive guidance. Generic chatbots, on the other hand, frequently lack context, feel sterile, or raise significant privacy concerns.
 
