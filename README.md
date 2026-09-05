@@ -1,128 +1,241 @@
-# Dear.ly
+# 💗 Dear.ly — Your Gemini Personal Journal
 
-> A private AI journal companion powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
+> A private, mindful, and empathetic personal AI journal powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
 
 ---
 
-## Overview
+## 📌 Overview
 
-**Dear.ly** is a personal journal and AI companion designed for calm, private self-reflection. It combines **written journaling, voice conversations, multimedia memories, daily music tracking, and a personal timeline** in one simple dashboard.
+**Dear.ly** is an empathetic personal journal and thoughtful AI companion designed with a warm, calm, soft-pastel aesthetic. It gives users a safe, private sanctuary to write daily reflections, capture multimedia moments, log daily soundtracks, and engage in spoken or text-based conversations with an AI companion that encourages healthy self-reflection.
 
-Unlike traditional journaling apps and generic AI chatbots, Dearly provides context-aware AI support using Google Gemini**, while keeping user data private and isolated through **Cloud Firestore**.
+Journaling is one of the most effective tools for mental clarity, emotional processing, and mindfulness. However, traditional journaling often suffers from blank-page friction, digital fatigue, and a lack of interactive guidance. Generic chatbots, on the other hand, frequently lack context, feel sterile, or raise significant privacy concerns.
 
-Dearly is built with **React, Node.js/Express, and WebSockets**, and is securely deployed on **Google Cloud Run**.
+Dear.ly bridges this gap by transforming journaling into an interactive, multi-sensory experience. It combines private, user-isolated Cloud Firestore storage with context-aware Google Gemini intelligence—providing compassionate reflections without ever simulating artificial consciousness or creating emotional dependency.
+
+Designed for students, professionals, creators, and anyone seeking a safe, grounding space to decompress, Dear.ly turns fleeting thoughts and multimedia memories into an organized, meaningful life chronicle.
+
+---
+
+## 💡 The Problem
+
+Many people struggle to maintain a consistent, beneficial journaling practice due to several key pain points:
+
+* **Text-Only Isolation & Friction**: Staring at a blank text box can feel intimidating and exhausting after a long day of screen time.
+* **Disconnected Memories**: Photos stay buried in camera rolls, favorite songs stay locked in streaming apps, and written thoughts stay in separate note apps, leaving memories fragmented.
+* **Lack of Reflective Feedback**: Traditional journals only receive words—they cannot help users unpack complex emotions, identify thought patterns, or offer gentle reframing.
+* **Typing Fatigue**: When individuals are stressed or emotionally overwhelmed, typing long paragraphs is often the last thing they want to do; they need a conversational, spoken outlet.
+* **Neglected Archives**: Users rarely revisit past entries because conventional tools lack engaging timelines, mood categorizations, or gentle reminder mechanisms.
+
+### How Dear.ly Solves This
+
+* **Multi-Modal Expression**: Users can journal via written text, real-time spoken voice calls, photo snapshots, video captures, or daily soundtrack associations.
+* **AI-Guided Self-Reflection**: Gemini analyzes written reflections on demand, highlighting underlying strengths, identifying emotional themes, and asking gentle coaching questions.
+* **Live Conversational Companion**: A bidirectional voice call powered by the Gemini Live API allows hands-free decompression with real-time audio visualization and selectable voice personas.
+* **Unified Memory Timeline**: An interactive monthly calendar aggregates daily moods, journal entries, moments, and music into a cohesive visual archive.
+* **Mindful Habit Building**: Configurable, privacy-friendly reminders nudge users toward consistent check-ins without intrusive alerts.
+
+---
+
+## ✨ Solution
+
+Dear.ly delivers an intuitive, frictionless flow that naturally adapts to how users want to express themselves at any given moment:
+
+```text
+User
+  │
+  ├── 1. Sign In Securely (Google OAuth via Firebase Popup)
+  │
+  ├── 2. Express & Capture (Choose your preferred medium)
+  │      ├── 📝 Write a mindful journal entry with mood tagging
+  │      ├── 🎙️ Start a real-time voice call with selectable AI personas
+  │      ├── 💬 Have a multi-turn reflective text chat session
+  │      ├── 📸 Capture photos or record video clips
+  │      └── 🎵 Search & link a "Song of the Day" soundtrack
+  │
+  ├── 3. Gemini Processing (Server-side via Google Cloud Run)
+  │      ├── Generates empathetic, grounded reflections
+  │      └── Streams bidirectional 16kHz audio with turn detection
+  │
+  ├── 4. Secure Persistence (Cloud Firestore user subcollections)
+  │      └── User-isolated ABAC security rules enforce strict ownership
+  │
+  ├── 5. Revisit & Reflect (Unified Calendar & In-App Music Player)
+  │      └── Explore memories chronologically with mood tracking
+  │
+  └── 6. Gentle Habits (In-app alerts & browser notifications)
+```
 
 ---
 
 ## ✨ Features
 
-* **Mindful Journal & AI Reflections** — Compose rich journal entries with mood tagging and request gentle, grounding AI reflections on demand.
-* **Multi-Turn Text Conversations** — Engage in reflective text chats with session context memory and ethical companion boundaries.
-* **Real-Time Voice Calls (Live API)** — Speak naturally in low-latency, bidirectional voice conversations powered by the Gemini Live API.
-* **Selectable Voice Personas** — Choose from expressive companion voices (*Aoede*, *Kore*, *Puck*, *Fenrir*, *Zephyr*, *Charon*).
-* **Moments Logger** — Capture photo and video memories with automated client-side downscaling and mood tagging.
-* **Song of the Day & In-App Player** — Search and log daily soundtracks via YouTube with an integrated background music player.
-* **Timeline Calendar** — View past journal entries, captured moments, and daily songs on an interactive monthly memory grid.
-* **Gentle Reminders** — Schedule configurable mindfulness nudges and daily journaling check-in alerts.
-* **Google Authentication** — Sign in securely with Google via Firebase Authentication popups with zero token leakage in URLs.
-* **Cloud Run Deployment** — Containerized full-stack deployment on Google Cloud Run with automatic scaling and server-side secret isolation.
+Every feature in Dear.ly is implemented, tested, and actively functional:
+
+* **🔐 Firebase Google Authentication** — One-click authentication using Google OAuth popups (`signInWithPopup`), preventing sensitive token exposure in browser URLs or history.
+* **🤖 Gemini-Powered AI Companion** — A mindful companion built on Gemini Flash models with custom prompt guidelines that prioritize empathy, emotional grounding, and healthy habits.
+* **💬 Multi-Turn Text Conversations** — Context-aware chat sessions with real-time message synchronization and automatic session grouping stored in Firestore.
+* **📝 Mindful Journal Entries & Prompt Generator** — Rich journal composer with mood tags (Happy, Calm, Reflective, Anxious, Sad, Grateful, Energetic), tag filters, AI-generated prompts, and on-demand AI reflection analysis.
+* **📸 Capture a Moment** — Multimedia logger supporting camera photo capture, live video recording, and file uploads with client-side canvas downscaling (max 1200px) and file size gating (<750KB).
+* **🎙️ Real-Time Voice Interaction (Gemini Live API)** — Low-latency, bidirectional spoken conversations streaming 16kHz mono linear PCM over WebSockets (`/api/live`) with Voice Activity Detection (VAD) and interruption handling.
+* **🔊 Selectable Voice Personas** — Six customizable voice models (*Aoede*, *Kore*, *Puck*, *Fenrir*, *Zephyr*, *Charon*) configurable in user settings.
+* **🎵 YouTube Music Integration & In-App Player** — Search, select, and link daily soundtracks with persistent background playback via a floating and expandable YouTube no-cookie embed player.
+* **📅 Calendar-Based Timeline** — Monthly memory grid aggregating daily journal entries, captured moments, and songs categorized by date with color-coded mood indicators.
+* **🔔 Customizable Reminders** — In-app notification system and browser Notification API integration for scheduled daily check-ins and mindfulness nudges.
+* **👤 Private User Data Isolation** — All Firestore documents reside exclusively under `/users/{userId}/*` with database-level security rules matching authenticated user IDs.
 
 ---
 
-## 🏗️ How It Works / Architecture
+## 🧠 Gemini / AI Approach
 
-Dearly separates client-side UI rendering from server-side AI execution and private database operations:
+Dear.ly uses the modern `@google/genai` TypeScript SDK to power its conversational and analytical capabilities.
+
+### 1. Model Roles & Responsibilities
+
+* **Text Conversations & Journal Reflections**: Powered by `gemini-3.8-flash` (with automated server-side fallback to `gemini-3.7-flash`, `gemini-3.6-flash`, and `gemini-3.1-flash-lite` during high demand).
+* **Real-Time Voice Pipeline**: Powered by `gemini-3.1-flash-live-preview` via bidirectional WebSocket sessions (`ai.live.connect`).
+
+### 2. Prompt Engineering & Companion Ethics
+
+* **Compassionate Boundary System**: System instructions explicitly mandate that Dearly acts as a gentle reflection tool, not a human replacement or medical professional. It never simulates sentience, claims consciousness, or fosters emotional dependence.
+* **Input Fencing & Sanitization**: User entries are bound by character limits and enclosed in structural delimiters (`"""`) to guard against prompt injection.
+* **Turn Normalization**: Conversation history is pruned and normalized server-side to enforce alternating `user` / `model` turns before dispatching to the Gemini API.
+
+### 3. Voice Streaming Pipeline (Gemini Live API)
+
+* **Client Audio Capture**: Captures microphone input at 16kHz mono linear PCM using the browser's `AudioContext` and downsampling buffers.
+* **WebSocket Bridge**: Raw audio is base64-encoded and sent over `/api/live` to the Express backend.
+* **Server-Side Live Session**: The backend proxies the PCM stream to Google's Live API endpoint using the secure server-side SDK.
+* **Real-Time Audio Playback**: Model-generated PCM chunks are streamed back, queued, and played smoothly in the browser with an animated voice ripple visualizer.
+* **Interruption Handling**: On user speech detection during model playback, server `interrupted` events immediately flush client audio buffers.
+
+### 4. Credential Protection
+
+* `GEMINI_API_KEY` is loaded strictly in Node.js server runtime memory from **Google Cloud Secret Manager** or server environment variables.
+* The API key is **never** sent to the client, exposed in browser network requests, or bundled into frontend assets.
+
+---
+
+## 🏗️ Technical Architecture
 
 ```text
-User Browser (React 19 SPA)
-  │
-  ├── 1. Auth & Data Sync (Direct Firebase SDK + Security Rules)
-  │      ▼
-  │   Google Cloud Firebase (Auth + Cloud Firestore)
-  │
-  ├── 2. REST Requests (/api/gemini/chat, /api/gemini/reflect, /api/music/*)
-  │      ▼
-  └── 3. Live 16kHz PCM Audio (WebSocket: /api/live)
-         ▼
-      Express Backend (Google Cloud Run)
-         │
-         ├── Google GenAI SDK (GEMINI_API_KEY from Secret Manager)
-         │      ▼
-         │   Google Gemini 3.8/3.7 Flash & Gemini Live API
-         │
-         └── YouTube Data API / Search Fallback Proxy
+┌────────────────────────────────────────────────────────────────────────┐
+│                         Client Browser (SPA)                           │
+│     React 19 + TypeScript + Tailwind CSS v4 + Motion Animations        │
+│                                                                        │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────────┐  │
+│  │   AuthContext    │  │  Navigation &    │  │  LiveAudioRecorder   │  │
+│  │ (Firebase Popup) │  │  View Modules    │  │  (16kHz PCM Stream)  │  │
+│  └────────┬─────────┘  └────────┬─────────┘  └──────────┬───────────┘  │
+└───────────┼─────────────────────┼───────────────────────┼──────────────┘
+            │                     │                       │
+     (Firebase Auth &             │ (Express REST API)    │ (WebSocket Bridge)
+      Direct Firestore SDK)       │ /api/gemini/*         │ /api/live
+            │                     │ /api/music/*          │
+            ▼                     ▼                       ▼
+┌──────────────────────────┐   ┌─────────────────────────────────────────┐
+│       Google Cloud       │   │          Express Backend Server         │
+│         Firebase         │   │            (Google Cloud Run)           │
+│  - Firebase Auth         │   │  - Vite SPA Static Asset Serving        │
+│  - Cloud Firestore DB    │   │  - REST Proxy for Gemini Text & Reflect │
+│    (User-isolated ABAC)  │   │  - Live WebSocket Proxy for Gemini Live │
+└──────────────────────────┘   │  - YouTube Search & Match Fallbacks     │
+                               └────────────────────┬────────────────────┘
+                                                    │
+                                                    │ (Authenticated SDK)
+                                                    ▼
+                               ┌─────────────────────────────────────────┐
+                               │             Google Gemini API           │
+                               │  - Gemini 3.8 Flash (Chat & Reflection) │
+                               │  - Gemini 3.1 Flash Live (Voice Stream) │
+                               └─────────────────────────────────────────┘
 ```
 
-### Data Flow
+### Component Breakdown
 
-1. **Authentication**: Users log in through Firebase Google Sign-In popups. Firestore security rules enforce strict user-ownership (`request.auth.uid == userId`) on all document paths.
-2. **Text & Reflection**: The client sends conversation history or journal entries to `/api/gemini/chat` or `/api/gemini/reflect`. The Express server formats prompts, applies companion system instructions, and executes inference with automated model fallback.
-3. **Voice Streaming**: The browser captures 16kHz linear PCM audio via the Web Audio API and streams base64 chunks over WebSockets (`/api/live`). The server relays the stream to `gemini-3.1-flash-live-preview` and streams synthesized audio chunks back for immediate playback.
-4. **Music Integration**: Searches from the client are proxied through `/api/music/search/youtube`, returning validated YouTube video IDs for playback in a privacy-enhanced `youtube-nocookie.com` embed.
+* **React 19 Frontend**: Modular view components (`JournalView`, `TalkView`, `MomentsView`, `SongOfTheDayView`, `CalendarView`, `HomeView`, `SettingsView`, `InAppMusicPlayer`) with Tailwind CSS v4 styling and Lucide icons.
+* **Express Backend (Node.js 22)**: Bundled into a single production CommonJS server (`dist/server.cjs`) via `esbuild`, hosting REST endpoints, WebSocket gateways, and serving SPA static assets.
+* **Firebase Web SDK**: Direct client connection to Firestore for real-time reads/writes, secured by database-level security rules.
+* **Google Gemini API**: Server-side client using `@google/genai` for structured reasoning, empathetic reflections, and bidirectional audio streaming.
 
 ---
 
-## 🧠 AI / ML Implementation
+## ☁️ How Google Cloud Was Used
 
-### Models Used
+Dearly was engineered from the ground up to leverage the Google Cloud and Google AI ecosystem:
 
-* **Text Conversations & Journal Reflections**: `gemini-3.8-flash` (with automated priority fallback to `gemini-3.7-flash`, `gemini-3.6-flash`, and `gemini-3.1-flash-lite` during high-demand periods).
-* **Real-Time Voice Calls**: `gemini-3.1-flash-live-preview` via `@google/genai` Live API client (`ai.live.connect`).
+### 1. Google Cloud Run
+* **Role**: Fully managed, serverless container hosting the Express backend and compiled Vite SPA.
+* **Why It Was Used**: Delivers automatic HTTPS, zero infrastructure management, scale-to-zero compute efficiency (`min-instances: 0`, `max-instances: 10`), and rapid cold starts.
+* **Deployment Config**: Container binds to host `0.0.0.0` on internal port `3000`, allocated `1 vCPU` and `1 GiB RAM`, labeled with `dev-tutorial=cloud-run-ai-challenge`.
 
-### Prompt Engineering & Companion Ethics
+### 2. Cloud Firestore
+* **Role**: Multi-tenant NoSQL document database storing journal entries, conversations, messages, captured moments, songs, settings, and reminders.
+* **Why It Was Used**: Provides real-time synchronization, offline client caching, and robust subcollection partitioning.
+* **Data Isolation**: All user collections are nested under `/users/{userId}/*` paths protected by Firestore Security Rules.
 
-* **System Instructions**: Configured with strict behavioral boundaries—warm, grounded, and empathetic, while explicitly prohibited from claiming consciousness, simulating emotional dependency, or offering medical/clinical diagnoses.
-* **Input Sanitization & Fencing**: Journal entries and chat histories are bounded by character limits and enclosed in structural delimiters (`"""`) to prevent prompt injection.
-* **Conversation Normalization**: Server-side filtering enforces strictly alternating `user` / `model` turn structure before calling the Gemini SDK.
+### 3. Firebase Authentication
+* **Role**: User identity and session management via Google OAuth 2.0.
+* **Why It Was Used**: Enables seamless one-click Google login without password management overhead.
+* **Security**: Client popups authenticate the user and bind their verified `uid` directly to database read/write permissions.
 
-### Audio Pipeline (Live API)
+### 4. Google Cloud Secret Manager
+* **Role**: Secure centralized storage for runtime secrets (`GEMINI_API_KEY`, optional `YOUTUBE_API_KEY`).
+* **Why It Was Used**: Eliminates hardcoded credentials and prevents secret leakage into version control or client bundles. Cloud Run mounts secrets directly into server environment variables.
 
-* **Input**: Browser captures microphone audio via `AudioContext`, downsamples to 16kHz mono linear PCM, and streams chunked payloads over WebSockets.
-* **Output**: Gemini Live synthesizes raw PCM audio buffers. The client decodes and queues chunks sequentially with visualizer ripple feedback.
-* **Interruption Handling**: Listens for server-sent `interrupted` events to instantly flush client playback buffers when the user speaks over the companion.
+### 5. Google Gemini API (Generative Language API)
+* **Role**: Core intelligence layer powering multi-turn text conversations, reflective prompt analysis, and real-time live voice synthesis.
+* **Why It Was Used**: Delivers state-of-the-art context windowing, natural empathetic tone, low latency, and native bidirectional audio streaming.
+
+### 6. YouTube Data API v3
+* **Role**: Search and metadata retrieval for the "Song of the Day" feature.
+* **Why It Was Used**: Allows users to find and attach authentic musical tracks to their daily memories with validated video embedding.
+
+---
+
+## 🔐 Security & Privacy
+
+* **User UID-Based Data Isolation**: Firestore documents reside strictly under `/users/{userId}/...`. Firestore Security Rules enforce `request.auth != null && request.auth.uid == userId` for all read and write operations.
+* **Default-Deny Policy**: A catch-all rule (`match /{document=**} { allow read, write: if false; }`) blocks unauthorized access to unmapped collections.
+* **Zero Client Secret Exposure**: Server-side secrets (`GEMINI_API_KEY`, `YOUTUBE_API_KEY`) remain strictly on the backend. No secret API keys are embedded in frontend bundles or exposed to browser network tabs.
+* **Secure Environment Configuration**: `.gitignore` strictly excludes `.env`, `.env.*`, `*service-account*.json`, `*credentials*.json`, `*.pem`, and `*.key`.
+* **Hardware Lifecycle Management**: Microphone and camera hardware tracks are only requested upon explicit user interaction and are terminated immediately (`MediaStreamTrack.stop()`) upon call completion or view unmount.
+* **Client Media Gating**: Uploaded photos and videos undergo canvas downscaling (max 1200px) and file size gating (<750KB) before saving to Firestore.
+* **XSS & Injection Protection**: Video IDs are validated against strict alphanumeric regular expressions (`/^[a-zA-Z0-9_-]{5,32}$/`) before rendering in iframe embeds.
+
+---
+
+## 🔄 User Flow
+
+1. **Sign In**: User opens Dearly and signs in with Google via a secure Firebase popup.
+2. **Identity Verification**: Firebase Auth confirms the user's identity and initializes their Firestore user profile document.
+3. **Daily Check-In**: User visits the Home dashboard, logs their current mood, and views recent entries and daily inspirations.
+4. **Mindful Journaling**: User writes a journal entry in `JournalView` and taps "Save & Get Dearly's Thoughts" to receive an AI-generated reflection.
+5. **Conversational Support**: User opens `TalkView` to chat via multi-turn text or taps "Voice Call" to speak aloud with the Gemini Live companion.
+6. **Capturing Memories**: User captures a photo or video in `MomentsView`, adds a caption and mood tag, and saves it.
+7. **Soundtrack Association**: User searches for their daily song in `SongOfTheDayView` and plays it in the floating background music player.
+8. **Timeline Exploration**: User navigates to `CalendarView` to browse past days, review historical entries, and see mood distribution across the month.
+9. **Mindfulness Reminders**: Scheduled notifications prompt the user at their preferred check-in time.
+10. **Data Ownership**: User can review settings, change voice personas, or export their complete journal history as JSON.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-* **Framework**: React 19, TypeScript
-* **Styling & Animation**: Tailwind CSS v4, Motion (`motion/react`)
-* **Icons**: Lucide React (`lucide-react`)
-* **Build Tool**: Vite 6
-
-### Backend
-* **Runtime & Server**: Node.js 22, Express 4, TypeScript (`tsx`)
-* **WebSockets**: `ws` (Real-Time Gemini Live Audio Gateway)
-* **Bundler**: `esbuild` (Compiles `server.ts` into a self-contained `dist/server.cjs`)
-
-### AI / ML
-* **SDK**: `@google/genai` TypeScript SDK
-* **Models**: Gemini 3.8 Flash, Gemini 3.7 Flash, Gemini 3.1 Flash Live Preview
-
-### Database & Authentication
-* **Database**: Cloud Firestore (Multi-tenant document store with Attribute-Based Access Control)
-* **Authentication**: Firebase Authentication (Google OAuth Popup Provider)
-
-### Cloud & Deployment
-* **Compute**: Google Cloud Run (Serverless container deployment)
-* **Secret Management**: Google Cloud Secret Manager / Environment Variables
-* **Media / Embeds**: YouTube Data API v3 & YouTube No-Cookie Player
-
----
-
-## ☁️ Deployment — GOOGLE CLOUD RUN
-
-Dearly is deployed as a fully managed containerized service on **Google Cloud Run**, serving both backend REST/WebSocket endpoints and compiled frontend assets.
-
-### Service Configuration & Restrictions
-
-* **Hosting Platform**: Google Cloud Run (Fully Managed Serverless Container)
-* **Ingress & Networking**: Container listens on host `0.0.0.0` on internal port `3000` behind Google Cloud HTTPS ingress routing.
-* **Scaling & Instances**: Scale-to-zero enabled (`min-instances: 0`, `max-instances: 10`) to eliminate idle compute costs while responding dynamically to user traffic.
-* **Resource Limits**: Configured with `1 vCPU` and `1 GiB RAM` memory allocation.
-* **Secret Isolation**: Runtime secrets (such as `GEMINI_API_KEY`) are mounted securely via Google Cloud Secret Manager, ensuring zero exposure in client code or build artifacts.
-* **Service Labels**: Tagged with `dev-tutorial=cloud-run-ai-challenge` for challenge verification.
+| Technology | Purpose |
+| :--- | :--- |
+| **Google Cloud Run** | Fully managed serverless container deployment & hosting |
+| **Google Gemini API** | Multi-turn text conversation & empathetic journal reflections (`@google/genai`) |
+| **Gemini Live API** | Low-latency, bidirectional real-time voice streaming (`gemini-3.1-flash-live-preview`) |
+| **Cloud Firestore** | NoSQL document database with user-isolated subcollections & ABAC rules |
+| **Firebase Authentication** | Secure Google OAuth 2.0 popup sign-in and user identity management |
+| **Google Cloud Secret Manager** | Secure runtime storage and injection of server-side API secrets |
+| **YouTube Data API v3** | Searching and matching daily soundtrack songs |
+| **React 19** | Declarative frontend user interface and component architecture |
+| **TypeScript 5.8** | End-to-end type safety across client and server |
+| **Express 4 & ws** | Node.js backend REST API and WebSocket live audio gateway |
+| **Tailwind CSS v4** | Modern utility-first styling with pastel aesthetic design |
+| **Motion** | Fluid view transitions and interactive UI animations |
+| **Vite 6 & esbuild** | Frontend bundling and server CommonJS compilation |
 
 ---
 
@@ -132,75 +245,39 @@ Dearly is deployed as a fully managed containerized service on **Google Cloud Ru
 dearly/
 ├── firebase-applet-config.json # Firebase Web SDK client configuration
 ├── firestore.rules             # Firestore Security Rules (User-isolated ABAC)
-├── metadata.json               # Applet metadata & permissions
-├── package.json                # Dependencies & build scripts
-├── server.ts                   # Express server, REST endpoints & WebSocket Live Gateway
-├── tsconfig.json               # TypeScript configuration
-├── vite.config.ts              # Vite + Tailwind configuration
+├── metadata.json               # Applet metadata & frame permissions
+├── package.json                # Dependencies, scripts & build configuration
+├── server.ts                   # Express server, REST APIs & WebSocket Live gateway
+├── tsconfig.json               # TypeScript compiler options
+├── vite.config.ts              # Vite plugins & Tailwind CSS configuration
+├── .env.example                # Documented environment variable template
+├── .gitignore                  # Strict credential & build artifact exclusions
 └── src/
-    ├── App.tsx                 # Root layout & active tab state management
-    ├── main.tsx                # React DOM entry point
-    ├── index.css               # Tailwind CSS v4 configuration
+    ├── App.tsx                 # Root layout, navigation router & active tab state
+    ├── main.tsx                # Application entry point & DOM bootstrap
+    ├── index.css               # Tailwind CSS v4 styling & color theme
     ├── types.ts                # Shared TypeScript interfaces & types
     ├── context/
-    │   └── AuthContext.tsx     # Firebase Auth state & profile sync
+    │   └── AuthContext.tsx     # Firebase Auth provider & profile synchronization
     ├── lib/
-    │   ├── audioLive.ts        # Web Audio API 16kHz PCM capture & playback queue
-    │   ├── firebase.ts         # Firebase client initialization
-    │   └── reminders.ts        # In-app & browser reminder scheduler
+    │   ├── audioLive.ts        # Web Audio API 16kHz PCM capture, streaming & queue player
+    │   ├── firebase.ts         # Firebase client SDK initialization
+    │   └── reminders.ts        # In-app & browser notification reminder engine
     └── components/
-        ├── AuthScreen.tsx       # Google Sign-In & guest gateway
-        ├── CalendarView.tsx     # Monthly memory timeline & day drawer
-        ├── HomeView.tsx         # Dashboard cards, mood check-in & quick actions
+        ├── AuthScreen.tsx       # Google Sign-In & guest onboarding view
+        ├── CalendarView.tsx     # Monthly memory timeline & day-detail drawer
+        ├── HomeView.tsx         # Dashboard summary, mood selector & quick actions
         ├── InAppMusicPlayer.tsx # Floating & expanded YouTube music player
-        ├── JournalView.tsx      # Entry composer & AI reflection panel
-        ├── MomentsView.tsx      # Photo/video capture & gallery
-        ├── Navigation.tsx       # Bottom navigation bar
-        ├── SettingsView.tsx     # Voice personas, data export & account controls
-        ├── SongOfTheDayView.tsx # Daily soundtrack search & logger
-        └── TalkView.tsx         # Text chat & Live Voice call interface
+        ├── JournalView.tsx      # Mindful editor, prompt generator & reflection panel
+        ├── MomentsView.tsx      # Camera capture, video recording & photo gallery
+        ├── Navigation.tsx       # Bottom navigation bar with active indicators
+        ├── SettingsView.tsx     # Voice personas, data export & account preferences
+        ├── SongOfTheDayView.tsx # Daily soundtrack search, preview & logger
+        └── TalkView.tsx         # Text chat & Live Voice call interface with visualizer
 ```
-
----
-
-## 🔌 API / Endpoints
-
-### Backend REST Endpoints
-
-| Method | Endpoint | Description | Payload / Query |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/health` | Service health status check | None |
-| `POST` | `/api/gemini/chat` | Multi-turn conversational text response | `{ messages: Array<{ role: string, content: string }> }` |
-| `POST` | `/api/gemini/reflect` | Generates a thoughtful reflection on a journal entry | `{ title?: string, content: string, mood?: string }` |
-| `GET` | `/api/music/search/youtube` | Searches YouTube for playable song tracks | `?q=<search_query>` |
-| `GET` | `/api/music/match-youtube` | Matches song title & artist to a playable video ID | `?q=<title>&artist=<artist>` |
-
-### WebSocket Endpoints
-
-| Protocol | Endpoint | Description |
-| :--- | :--- | :--- |
-| `WSS` | `/api/live` | Bidirectional 16kHz PCM audio bridge to Gemini Live API (`gemini-3.1-flash-live-preview`) |
-
----
-
-## 📊 Results / Performance
-
-* **Sub-Second Text Latency**: Gemini Flash models deliver conversational responses within 400–800ms.
-* **Low-Latency Live Audio**: 16kHz PCM streaming provides a natural, real-time conversational voice experience.
-* **Optimized Client Media Storage**: Client-side canvas downscaling compresses uploaded photos to ≤1200px (under 750KB) before saving to Firestore, preventing unnecessary bandwidth and storage overhead.
-* **Serverless Scale-to-Zero**: Cloud Run deployment consumes zero idle compute resources while maintaining fast cold starts (~1.5s).
-
----
-
-## 🔮 Future Improvements
-
-* **On-Device Offline Support**: Expand offline caching with IndexedDB for drafting journal entries without an active internet connection.
-* **Audio Journal Playback**: Support recording and storing spoken voice memos attached directly to journal entries.
-* **Weekly Mood Analytics**: Visual trend charts showing mood distribution and recurring emotional themes over time.
-* **End-to-End Encryption**: Optional client-side encryption key support for sensitive reflections before Firestore persistence.
 
 ---
 
 ## 📄 License & Privacy
 
-Dearly is built with a privacy-first ethos. Personal journal entries, audio recordings, and media remain strictly owned by the authenticated user.
+Dear.ly is built with a privacy-first ethos. Personal reflections, spoken conversations, uploaded media, and memories remain strictly owned by the user.
