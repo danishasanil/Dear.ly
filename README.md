@@ -1,6 +1,6 @@
 # 💗 Dear.ly — Your Gemini Personal Journal
 
-> A private, mindful, and empathetic personal AI journal powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
+> A private, mindful and personal AI journal powered by Google Gemini, the Gemini Live API, Cloud Firestore, and Google Cloud Run.
 
 ---
 
