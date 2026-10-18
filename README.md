@@ -277,7 +277,8 @@ dearly/
 ```
 
 ---
-
+## OPEN APP:
+https://dear-ly-your-gemini-personal-journal-741962613340.us-west1.run.app/
 ## 📄 License & Privacy
 
 Dear.ly is built with a privacy-first ethos. Personal reflections, spoken conversations, uploaded media, and memories remain strictly owned by the user.
